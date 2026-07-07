@@ -1704,18 +1704,49 @@
         flex-shrink: 0;
       }
 
-      /* ── REELS ── */
+      /* ── REELS (fit-to-viewport, no scroll needed to see the whole section) ── */
       .reels {
-        padding: 80px 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 40px 0;
+        background: var(--green-deeper);
+        position: relative;
+        overflow: hidden;
+      }
+      .reels > .container {
+        width: 100%;
+        position: relative;
+        z-index: 1;
+      }
+      .reels::before {
+        content: "";
+        position: absolute;
+        width: 520px;
+        height: 520px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(252, 184, 56, 0.06),
+          transparent 70%
+        );
+        top: -180px;
+        left: -120px;
       }
 
       .reels-head {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 2rem;
+        margin-bottom: 1.75rem;
         flex-wrap: wrap;
         gap: 1rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .reels-head h2 {
+        color: white;
       }
 
       .reels-nav {
@@ -1724,14 +1755,14 @@
       }
 
       .reels-nav button {
-        width: 46px;
-        height: 46px;
-        border: none;
+        width: 42px;
+        height: 42px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
         border-radius: 50%;
-        background: var(--green);
+        background: rgba(255, 255, 255, 0.06);
         color: #fff;
         cursor: pointer;
-        font-size: 20px;
+        font-size: 18px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1739,41 +1770,46 @@
       }
 
       .reels-nav button:hover {
-        background: var(--green-mid);
+        background: var(--gold);
+        color: var(--green-dark);
+        border-color: var(--gold);
       }
 
+      /* Reel cards sized in vh so the whole row fits inside one viewport-height
+         section without needing to scroll further down to see it. */
       .reels-scroll {
         display: flex;
-        gap: 24px;
+        gap: 20px;
         overflow-x: auto;
         overflow-y: hidden;
-        padding: 20px 0;
+        padding: 8px 4px 14px;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: thin;
-        scrollbar-color: #d1d5db transparent;
+        scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
       }
 
       .reels-scroll::-webkit-scrollbar {
-        height: 10px;
+        height: 8px;
       }
 
       .reels-scroll::-webkit-scrollbar-track {
-        background: #f3f4f6;
+        background: rgba(255, 255, 255, 0.05);
         border-radius: 10px;
       }
 
       .reels-scroll::-webkit-scrollbar-thumb {
-        background: #c4c4c4;
+        background: rgba(255, 255, 255, 0.25);
         border-radius: 10px;
       }
 
       .reel-card {
         position: relative;
-        flex: 0 0 320px;
-        width: 320px;
+        flex: 0 0 auto;
+        height: 46vh;
+        max-height: 400px;
         aspect-ratio: 9/16;
-        border-radius: 22px;
+        border-radius: 18px;
         overflow: hidden;
         background: #000;
         cursor: pointer;
@@ -1797,36 +1833,89 @@
           rgba(0, 0, 0, 0.15),
           transparent
         );
+        pointer-events: none;
       }
 
       .reel-tag {
         position: absolute;
-        top: 18px;
-        left: 18px;
+        top: 14px;
+        left: 14px;
         z-index: 2;
         background: rgba(0, 0, 0, 0.45);
         color: #fff;
-        padding: 6px 14px;
+        padding: 5px 12px;
         border-radius: 20px;
-        font-size: 13px;
+        font-size: 11.5px;
         font-weight: 600;
+      }
+
+      /* Sound toggle — top-right of each reel card */
+      .reel-sound-icon {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 3;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .reel-sound-icon:hover {
+        background: rgba(0, 0, 0, 0.7);
+      }
+      .reel-sound-icon svg {
+        width: 16px;
+        height: 16px;
+        stroke: #fff;
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .reel-sound-icon .icon-muted {
+        display: block;
+      }
+      .reel-sound-icon .icon-unmuted {
+        display: none;
+      }
+      .reel-card.unmuted .reel-sound-icon .icon-muted {
+        display: none;
+      }
+      .reel-card.unmuted .reel-sound-icon .icon-unmuted {
+        display: block;
       }
 
       .reel-caption {
         position: absolute;
-        bottom: 20px;
-        left: 20px;
-        right: 20px;
+        bottom: 16px;
+        left: 16px;
+        right: 16px;
         color: #fff;
-        font-size: 24px;
+        font-size: 19px;
         font-weight: 700;
         z-index: 2;
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 900px) {
+        .reels {
+          min-height: unset;
+        }
         .reel-card {
-          flex: 0 0 80vw;
-          width: 80vw;
+          height: 38vh;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .reel-card {
+          flex-basis: 62vw;
+          height: 340px;
+          max-height: 50vh;
         }
       }
 
@@ -2267,7 +2356,6 @@
         .menu-section,
         .why,
         .about,
-        .reels,
         .faq,
         .app-screens {
           min-height: unset;
@@ -2306,9 +2394,6 @@
         }
         .why-stat-row {
           gap: 1.5rem;
-        }
-        .reel-card {
-          flex-basis: 160px;
         }
         .hero-nav {
           bottom: 16px;
@@ -3281,22 +3366,21 @@
       </div>
     </section>
 
-    <!-- REELS -->
+    <!-- REELS (fits in one viewport — no scrolling needed to see the whole section) -->
     <section class="reels" id="reels">
       <div class="container">
         <div class="reels-head">
           <div>
-            <div class="tag">From the kitchen</div>
+            <div class="tag tag-white">Behind the Scenes</div>
             <h2
               style="
                 font-size: clamp(1.7rem, 2.8vw, 2.4rem);
-                color: var(--text);
               "
             >
-              Watch today's meals
+              See how we craft your fuel
               <em
                 style="
-                  color: var(--green);
+                  color: var(--gold);
                   font-style: italic;
                   font-weight: 500;
                 "
@@ -3312,52 +3396,107 @@
 
         <div class="reels-scroll">
           <!-- Reel 1 -->
-          <div class="reel-card">
+          <div class="reel-card" data-reel>
             <video autoplay muted loop playsinline preload="none">
               <source src="videos/summer-meals.mp4" type="video/mp4" />
             </video>
-
             <div class="reel-tag">Reel</div>
+            <button class="reel-sound-icon" aria-label="Toggle sound">
+              <svg class="icon-muted" viewBox="0 0 24 24">
+                <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                <line x1="23" y1="9" x2="17" y2="15" />
+                <line x1="17" y1="9" x2="23" y2="15" />
+              </svg>
+              <svg class="icon-unmuted" viewBox="0 0 24 24">
+                <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                <path d="M15.5 8.5a5 5 0 010 7" />
+                <path d="M18.5 6a9 9 0 010 12" />
+              </svg>
+            </button>
             <div class="reel-caption">Beat the Heat Naturally</div>
           </div>
 
           <!-- Reel 2 -->
-          <div class="reel-card">
+          <div class="reel-card" data-reel>
             <video autoplay muted loop playsinline preload="none">
               <source src="videos/pcos-meals.mp4" type="video/mp4" />
             </video>
-
             <div class="reel-tag">Reel</div>
+            <button class="reel-sound-icon" aria-label="Toggle sound">
+              <svg class="icon-muted" viewBox="0 0 24 24">
+                <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                <line x1="23" y1="9" x2="17" y2="15" />
+                <line x1="17" y1="9" x2="23" y2="15" />
+              </svg>
+              <svg class="icon-unmuted" viewBox="0 0 24 24">
+                <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                <path d="M15.5 8.5a5 5 0 010 7" />
+                <path d="M18.5 6a9 9 0 010 12" />
+              </svg>
+            </button>
             <div class="reel-caption">PCOS Friendly Meals</div>
           </div>
 
           <!-- Reel 3 -->
-          <div class="reel-card">
+          <div class="reel-card" data-reel>
             <video autoplay muted loop playsinline preload="none">
               <source src="videos/healthy-snacks.mp4" type="video/mp4" />
             </video>
-
             <div class="reel-tag">Reel</div>
+            <button class="reel-sound-icon" aria-label="Toggle sound">
+              <svg class="icon-muted" viewBox="0 0 24 24">
+                <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                <line x1="23" y1="9" x2="17" y2="15" />
+                <line x1="17" y1="9" x2="23" y2="15" />
+              </svg>
+              <svg class="icon-unmuted" viewBox="0 0 24 24">
+                <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                <path d="M15.5 8.5a5 5 0 010 7" />
+                <path d="M18.5 6a9 9 0 010 12" />
+              </svg>
+            </button>
             <div class="reel-caption">Healthy Snacking</div>
           </div>
 
           <!-- Reel 4 -->
-          <div class="reel-card">
+          <div class="reel-card" data-reel>
             <video autoplay muted loop playsinline preload="none">
               <source src="videos/lose-weight.mp4" type="video/mp4" />
             </video>
-
             <div class="reel-tag">Reel</div>
+            <button class="reel-sound-icon" aria-label="Toggle sound">
+              <svg class="icon-muted" viewBox="0 0 24 24">
+                <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                <line x1="23" y1="9" x2="17" y2="15" />
+                <line x1="17" y1="9" x2="23" y2="15" />
+              </svg>
+              <svg class="icon-unmuted" viewBox="0 0 24 24">
+                <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                <path d="M15.5 8.5a5 5 0 010 7" />
+                <path d="M18.5 6a9 9 0 010 12" />
+              </svg>
+            </button>
             <div class="reel-caption">Lose Weight Naturally</div>
           </div>
 
           <!-- Reel 5 -->
-          <div class="reel-card">
+          <div class="reel-card" data-reel>
             <video autoplay muted loop playsinline preload="none">
               <source src="videos/founders-story.mp4" type="video/mp4" />
             </video>
-
             <div class="reel-tag">Reel</div>
+            <button class="reel-sound-icon" aria-label="Toggle sound">
+              <svg class="icon-muted" viewBox="0 0 24 24">
+                <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                <line x1="23" y1="9" x2="17" y2="15" />
+                <line x1="17" y1="9" x2="23" y2="15" />
+              </svg>
+              <svg class="icon-unmuted" viewBox="0 0 24 24">
+                <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                <path d="M15.5 8.5a5 5 0 010 7" />
+                <path d="M18.5 6a9 9 0 010 12" />
+              </svg>
+            </button>
             <div class="reel-caption">Our Mission</div>
           </div>
         </div>
@@ -3858,6 +3997,34 @@
           behavior: "smooth",
         });
       };
+
+      /* ===== Reel sound toggle wiring =====
+         Each reel starts muted (autoplay requires it). Tapping the sound icon
+         unmutes that video and mutes all others, so only one plays audio at a time. */
+      (function () {
+        const reelCards = document.querySelectorAll(".reel-card[data-reel]");
+
+        reelCards.forEach((card) => {
+          const video = card.querySelector("video");
+          const soundBtn = card.querySelector(".reel-sound-icon");
+
+          soundBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const willUnmute = video.muted;
+
+            // mute every other reel first
+            reelCards.forEach((otherCard) => {
+              if (otherCard === card) return;
+              otherCard.classList.remove("unmuted");
+              const otherVideo = otherCard.querySelector("video");
+              otherVideo.muted = true;
+            });
+
+            video.muted = !willUnmute;
+            card.classList.toggle("unmuted", willUnmute);
+          });
+        });
+      })();
     </script>
   </body>
 </html>
