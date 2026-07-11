@@ -471,7 +471,7 @@
         -webkit-overflow-scrolling: touch;
         position: relative;
         z-index: 1;
-        overscroll-behavior-y: none;
+        touch-action: pan-x;
       }
       .hero-slides::-webkit-scrollbar {
         display: none;
@@ -2301,6 +2301,28 @@
         }
         .hero-slide {
           align-items: center;
+        }
+        /* arrows pinned to vertical center of left/right edges, dots drop to bottom */
+        .hero-nav {
+          top: 0;
+          bottom: 0;
+        }
+        .hero-nav-arrow {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        #heroPrev {
+          left: 14px;
+        }
+        #heroNext {
+          right: 14px;
+        }
+        .hero-dots {
+          position: absolute;
+          left: 50%;
+          bottom: 16px;
+          transform: translateX(-50%);
         }
       }
       @media (max-width: 1024px) {
