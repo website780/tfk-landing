@@ -485,11 +485,13 @@
         display: flex;
         align-items: center;
         padding: 120px 0 80px;
-        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
       }
       .hero-slide .container {
         width: 100%;
         max-height: 100%;
+        margin: auto 0;
       }
       .hero-inner {
         display: grid;
@@ -578,6 +580,7 @@
       .hero-numbers {
         display: flex;
         gap: 2.5rem;
+        flex-wrap: wrap;
       }
       .hero-num-val {
         font-family: "Fraunces", serif;
@@ -602,6 +605,7 @@
       /* HERO CARD */
       .hero-card-wrap {
         position: relative;
+        max-width: 100%;
       }
       .meal-showcase {
         background: white;
@@ -653,6 +657,7 @@
       .meal-macros {
         display: flex;
         gap: 0.5rem;
+        flex-wrap: wrap;
       }
       .macro-pill {
         background: var(--gray-light);
@@ -681,6 +686,7 @@
         font-weight: 600;
         color: var(--text);
         white-space: nowrap;
+        max-width: calc(100vw - 24px);
       }
       .streak-icon {
         width: 34px;
@@ -715,6 +721,7 @@
         font-weight: 500;
         box-shadow: 0 10px 32px rgba(0, 0, 0, 0.2);
         white-space: nowrap;
+        max-width: calc(100vw - 24px);
       }
       .live-dot {
         display: inline-block;
@@ -2420,6 +2427,23 @@
           white-space: normal;
         }
       }
+      @media (max-width: 768px) {
+        .hero-slide {
+          padding: 96px 16px 48px;
+        }
+        .hero-numbers {
+          gap: 1.5rem;
+          justify-content: center;
+        }
+        .hero-divider {
+          display: none;
+        }
+        .streak-chip,
+        .delivery-chip {
+          font-size: 11px;
+          padding: 8px 11px;
+        }
+      }
       @media (max-width: 600px) {
         .hero h1 {
           font-size: clamp(1.4rem, 6vw, 1.9rem);
@@ -2516,7 +2540,7 @@
           transform: translateX(-50%);
         }
         .hero-slide {
-          padding: 90px 0 55px;
+          padding: 90px 16px 55px;
         }
         .hero-scroll-hint {
           top: 20px;
@@ -2524,6 +2548,51 @@
         }
         .phones-grid {
           grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 400px) {
+        .hero-card-wrap {
+          max-width: 220px;
+        }
+        .streak-chip {
+          left: 0;
+          right: auto;
+          bottom: -14px;
+        }
+        .delivery-chip {
+          right: 0;
+          top: -14px;
+        }
+      }
+      /* Short viewports (landscape phones, small laptops): let hero content
+         breathe instead of clipping, and shrink the numbers/card so
+         everything fits without scrolling. */
+      @media (max-height: 700px) {
+        .hero-slide {
+          padding: 84px 5% 24px;
+        }
+        .hero-actions {
+          margin-bottom: 1.25rem;
+        }
+        .hero h1 {
+          margin-bottom: 0.75rem;
+        }
+        .hero-sub {
+          margin-bottom: 1.25rem;
+        }
+        .meal-showcase-img {
+          height: 140px;
+        }
+      }
+      @media (max-height: 560px) {
+        .hero-numbers {
+          display: none;
+        }
+        .hero-card-wrap {
+          display: none;
+        }
+        .hero-nav {
+          bottom: 10px;
         }
       }
     </style>
