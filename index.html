@@ -8,7 +8,7 @@
     </title>
     <meta
       name="description"
-      content="Fresh, macro-balanced, 100% vegetarian meals delivered daily across Mumbai. High-protein veg meal plans from breakfast to dinner - cooked every morning, no preservatives. Plans from 3 to 30 days."
+      content="Fresh, wholesome, 100% vegetarian meals delivered daily across Mumbai. Veg meal plans from breakfast to dinner - cooked every morning, no preservatives. Plans from 3 to 30 days."
     />
     <link rel="canonical" href="https://www.thefitletickitchen.com/" />
 
@@ -20,7 +20,7 @@
     />
     <meta
       property="og:description"
-      content="Macro-balanced pure veg meals, cooked fresh every morning and delivered across Mumbai. Muscle gain, weight loss & balanced plans."
+      content="Wholesome pure veg meals, cooked fresh every morning and delivered across Mumbai. Muscle gain, weight loss & balanced plans."
     />
     <meta property="og:url" content="https://www.thefitletickitchen.com/" />
     <meta
@@ -38,7 +38,7 @@
     />
     <meta
       name="twitter:description"
-      content="Macro-balanced pure veg meals delivered fresh daily across Mumbai."
+      content="Wholesome pure veg meals delivered fresh daily across Mumbai."
     />
     <meta
       name="twitter:image"
@@ -53,7 +53,7 @@
         "url": "https://www.thefitletickitchen.com/",
         "logo": "https://www.thefitletickitchen.com/TFk_2.png",
         "image": "https://www.thefitletickitchen.com/og-image.jpg",
-        "description": "Macro-balanced, 100% vegetarian meal subscription service delivering freshly cooked meals across Mumbai every morning.",
+        "description": "Wholesome, 100% vegetarian meal subscription service delivering freshly cooked meals across Mumbai every morning.",
         "servesCuisine": "Healthy Vegetarian, Indian",
         "email": "hello@thefitletickitchen.com",
         "telephone": "+91-9152277193",
@@ -424,6 +424,7 @@
       /* ── HERO ── */
       .hero {
         min-height: 100vh;
+        min-height: 100dvh;
         background: radial-gradient(
           120% 90% at 85% -10%,
           #0a6b4f 0%,
@@ -457,10 +458,12 @@
         pointer-events: none;
       }
 
-      /* Horizontal hero slider — full hero (text + image) scrolls left-to-right */
+      /* Horizontal hero slider — full hero (text + image) scrolls left-to-right.
+         Fixed height, no vertical scroll: only horizontal drag/swipe moves slides. */
       .hero-slides {
         display: flex;
         height: 100vh;
+        height: 100dvh;
         overflow-x: auto;
         overflow-y: hidden;
         scroll-snap-type: x mandatory;
@@ -468,6 +471,7 @@
         -webkit-overflow-scrolling: touch;
         position: relative;
         z-index: 1;
+        overscroll-behavior-y: none;
       }
       .hero-slides::-webkit-scrollbar {
         display: none;
@@ -475,14 +479,17 @@
       .hero-slide {
         flex: 0 0 100%;
         width: 100%;
+        height: 100%;
         scroll-snap-align: start;
         scroll-snap-stop: always;
         display: flex;
         align-items: center;
         padding: 120px 0 80px;
+        overflow: hidden;
       }
       .hero-slide .container {
         width: 100%;
+        max-height: 100%;
       }
       .hero-inner {
         display: grid;
@@ -827,6 +834,7 @@
         align-items: center;
         gap: 8px;
         letter-spacing: 0.01em;
+        white-space: nowrap;
       }
       .strip-dot {
         width: 4px;
@@ -834,6 +842,7 @@
         background: var(--green-dark);
         border-radius: 50%;
         opacity: 0.4;
+        flex-shrink: 0;
       }
 
       /* ── HOW ── */
@@ -2284,16 +2293,29 @@
       }
 
       /* ── RESPONSIVE ── */
-      @media (max-width: 900px) {
+      @media (max-width: 1440px) {
+        /* Hero: horizontal-only slider below 1440px. Fixed height, no vertical
+           scroll — content is centered and clamped to fit within the viewport. */
+        .hero-slides {
+          overflow-y: hidden;
+        }
+        .hero-slide {
+          align-items: center;
+        }
+      }
+      @media (max-width: 1024px) {
         .nav-links {
           display: none;
         }
         .hamburger {
           display: flex;
         }
+        .hero-slide {
+          padding: 100px 0 40px;
+        }
         .hero-inner {
           grid-template-columns: 1fr;
-          gap: 2.5rem;
+          gap: 1.5rem;
           text-align: center;
         }
         .hero-sub {
@@ -2302,12 +2324,13 @@
         }
         .hero-actions {
           justify-content: center;
+          margin-bottom: 1.75rem;
         }
         .hero-numbers {
           justify-content: center;
         }
         .hero-card-wrap {
-          max-width: 340px;
+          max-width: 300px;
           margin: 0 auto;
         }
         .delivery-chip {
@@ -2360,8 +2383,75 @@
         .app-screens {
           min-height: unset;
         }
+        /* strip: clean 2-column grid so items line up instead of wrapping
+           into an uneven flex row with an orphaned dot */
+        .strip-inner {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px 24px;
+          justify-items: start;
+        }
+        .strip-dot {
+          display: none;
+        }
+        .strip-item {
+          white-space: normal;
+        }
       }
       @media (max-width: 600px) {
+        .hero h1 {
+          font-size: clamp(1.4rem, 6vw, 1.9rem);
+          margin-bottom: 0.75rem;
+        }
+        .hero-sub {
+          font-size: 0.92rem;
+          margin-bottom: 1.25rem;
+        }
+        .hero-actions {
+          gap: 0.6rem;
+          margin-bottom: 1.25rem;
+        }
+        .btn {
+          padding: 11px 22px;
+          font-size: 12.5px;
+        }
+        .hero-numbers {
+          gap: 1.25rem;
+        }
+        .hero-num-val {
+          font-size: 1.5rem;
+        }
+        .hero-num-label {
+          font-size: 10px;
+        }
+        .hero-card-wrap {
+          max-width: 250px;
+        }
+        .meal-showcase-img {
+          height: 130px;
+        }
+        .meal-showcase-body {
+          padding: 0.9rem 1rem 1rem;
+        }
+        .meal-name {
+          font-size: 0.98rem;
+        }
+        .meal-macros {
+          gap: 0.35rem;
+        }
+        .macro-pill {
+          padding: 5px 10px;
+          font-size: 11px;
+        }
+        .streak-chip,
+        .delivery-chip {
+          font-size: 10.5px;
+          padding: 7px 10px;
+        }
+        .streak-icon {
+          width: 28px;
+          height: 28px;
+        }
         .steps {
           grid-template-columns: 1fr;
         }
@@ -2371,18 +2461,10 @@
         .meals-grid {
           grid-template-columns: 1fr;
         }
+        /* strip: single column on very small screens, still grid-aligned */
         .strip-inner {
-          gap: 1.25rem;
-          justify-content: flex-start;
-        }
-        .hero-numbers {
-          gap: 1.5rem;
-        }
-        .delivery-chip {
-          display: none;
-        }
-        .streak-chip {
-          left: -4px;
+          grid-template-columns: 1fr;
+          gap: 10px;
         }
         .footer-top {
           grid-template-columns: 1fr;
@@ -2396,15 +2478,27 @@
           gap: 1.5rem;
         }
         .hero-nav {
-          bottom: 16px;
+          bottom: 14px;
           gap: 1rem;
+          justify-content: space-between;
+          padding: 0 14px;
         }
         .hero-nav-arrow {
-          width: 34px;
-          height: 34px;
+          width: 32px;
+          height: 32px;
+        }
+        .hero-dots {
+          position: absolute;
+          left: 50%;
+          bottom: 14px;
+          transform: translateX(-50%);
         }
         .hero-slide {
-          padding: 100px 0 70px;
+          padding: 90px 0 55px;
+        }
+        .hero-scroll-hint {
+          top: 20px;
+          font-size: 9.5px;
         }
         .phones-grid {
           grid-template-columns: repeat(2, 1fr);
@@ -2550,12 +2644,12 @@
                   <span class="meal-badge-fresh">Fresh today</span>
                 </div>
                 <div class="meal-showcase-body">
-                  <div class="meal-type">High Protein · Today's Pick</div>
+                  <div class="meal-type">Today's Pick</div>
                   <div class="meal-name">Paneer Tikka Quinoa Bowl</div>
                   <div class="meal-macros">
-                    <div class="macro-pill"><span>480</span> kcal</div>
-                    <div class="macro-pill"><span>32g</span> protein</div>
-                    <div class="macro-pill"><span>Low</span> carb</div>
+                    <div class="macro-pill">Wholesome</div>
+                    <div class="macro-pill">Fresh</div>
+                    <div class="macro-pill">Balanced</div>
                   </div>
                 </div>
               </div>
@@ -2589,7 +2683,7 @@
           <div class="container hero-inner">
             <div>
               <h1>
-                Comfort food,<br />the <em>macro-smart</em><br />way. Every
+                Comfort food,<br />made <em>the right</em><br />way. Every
                 morning.
               </h1>
               <div class="hero-actions">
@@ -2625,12 +2719,12 @@
                   <span class="meal-badge-fresh">Comfort pick</span>
                 </div>
                 <div class="meal-showcase-body">
-                  <div class="meal-type">High Fibre · Chef Special</div>
+                  <div class="meal-type">Chef Special</div>
                   <div class="meal-name">Tadka Dal with Millet Roti</div>
                   <div class="meal-macros">
-                    <div class="macro-pill"><span>400</span> kcal</div>
-                    <div class="macro-pill"><span>20g</span> protein</div>
-                    <div class="macro-pill"><span>High</span> fibre</div>
+                    <div class="macro-pill">Hearty</div>
+                    <div class="macro-pill">Fresh</div>
+                    <div class="macro-pill">Comforting</div>
                   </div>
                 </div>
               </div>
@@ -2664,8 +2758,8 @@
           <div class="container hero-inner">
             <div>
               <h1>
-                Low carb, high flavour.<br /><em>Keto-friendly</em><br />veg,
-                done right.
+                Light on the plate,<br /><em>big</em> on<br />flavour, done
+                right.
               </h1>
               <div class="hero-actions">
                 <a href="#plans" class="btn btn-gold">See Real Pricing</a>
@@ -2697,15 +2791,15 @@
                       center/cover;
                   "
                 >
-                  <span class="meal-badge-fresh">Low carb</span>
+                  <span class="meal-badge-fresh">Light &amp; fresh</span>
                 </div>
                 <div class="meal-showcase-body">
-                  <div class="meal-type">Fresh · Keto-friendly</div>
+                  <div class="meal-type">Fresh Pick</div>
                   <div class="meal-name">Sprout &amp; Avocado Power Salad</div>
                   <div class="meal-macros">
-                    <div class="macro-pill"><span>310</span> kcal</div>
-                    <div class="macro-pill"><span>18g</span> protein</div>
-                    <div class="macro-pill"><span>Low</span> carb</div>
+                    <div class="macro-pill">Light</div>
+                    <div class="macro-pill">Fresh</div>
+                    <div class="macro-pill">Crisp</div>
                   </div>
                 </div>
               </div>
@@ -2775,14 +2869,14 @@
                   <span class="meal-badge-fresh">On the go</span>
                 </div>
                 <div class="meal-showcase-body">
-                  <div class="meal-type">Light · Low Fat</div>
+                  <div class="meal-type">Light Pick</div>
                   <div class="meal-name">
                     Tofu &amp; Veggie Whole-Wheat Wrap
                   </div>
                   <div class="meal-macros">
-                    <div class="macro-pill"><span>360</span> kcal</div>
-                    <div class="macro-pill"><span>22g</span> protein</div>
-                    <div class="macro-pill"><span>Low</span> fat</div>
+                    <div class="macro-pill">Light</div>
+                    <div class="macro-pill">Fresh</div>
+                    <div class="macro-pill">Portable</div>
                   </div>
                 </div>
               </div>
@@ -2830,7 +2924,7 @@
         <div class="strip-dot"></div>
         <div class="strip-item">Freshly cooked daily</div>
         <div class="strip-dot"></div>
-        <div class="strip-item">Nutritionist-approved macros</div>
+        <div class="strip-item">Nutritionist-approved meals</div>
         <div class="strip-dot"></div>
         <div class="strip-item">Flexible delivery address daily</div>
       </div>
@@ -2933,9 +3027,9 @@
               font-weight: 300;
             "
           >
-            Every plan is 100% vegetarian and macro-balanced for your goal.
-            Prices below are pulled straight from our live rate card — no
-            surprises at checkout.
+            Every plan is 100% vegetarian and thoughtfully put together for
+            your goal. Prices below are pulled straight from our live rate
+            card — no surprises at checkout.
           </p>
         </div>
 
@@ -3085,7 +3179,7 @@
                   font-style: italic;
                   font-weight: 500;
                 "
-                >high-protein veg menu</em
+                >veg menu</em
               >
             </h2>
           </div>
@@ -3103,11 +3197,9 @@
               <div class="meal-veg-mark"></div>
             </div>
             <div class="meal-info">
-              <div class="meal-cat">Comfort · High Protein</div>
+              <div class="meal-cat">Comfort</div>
               <div class="meal-name-card">Tadka Dal with Millet Roti</div>
-              <div class="meal-stats">
-                <strong>400 kcal</strong> · 20g protein · High fibre
-              </div>
+              <div class="meal-stats">Hearty · Fresh · High fibre</div>
             </div>
           </div>
           <div class="meal-card">
@@ -3121,11 +3213,9 @@
               <div class="meal-veg-mark"></div>
             </div>
             <div class="meal-info">
-              <div class="meal-cat">Low Carb · Fresh</div>
+              <div class="meal-cat">Light · Fresh</div>
               <div class="meal-name-card">Sprout & Avocado Power Salad</div>
-              <div class="meal-stats">
-                <strong>310 kcal</strong> · 18g protein · Keto-friendly
-              </div>
+              <div class="meal-stats">Light · Crisp · Refreshing</div>
             </div>
           </div>
           <div class="meal-card">
@@ -3139,11 +3229,9 @@
               <div class="meal-veg-mark"></div>
             </div>
             <div class="meal-info">
-              <div class="meal-cat">Balanced · Chef Special</div>
+              <div class="meal-cat">Chef Special</div>
               <div class="meal-name-card">Paneer Tikka Quinoa Bowl</div>
-              <div class="meal-stats">
-                <strong>480 kcal</strong> · 32g protein · High protein
-              </div>
+              <div class="meal-stats">Wholesome · Fresh · Balanced</div>
             </div>
           </div>
           <div class="meal-card">
@@ -3157,11 +3245,9 @@
               <div class="meal-veg-mark"></div>
             </div>
             <div class="meal-info">
-              <div class="meal-cat">Light · On the Go</div>
+              <div class="meal-cat">On the Go</div>
               <div class="meal-name-card">Tofu & Veggie Whole-Wheat Wrap</div>
-              <div class="meal-stats">
-                <strong>360 kcal</strong> · 22g protein · Low fat
-              </div>
+              <div class="meal-stats">Light · Fresh · Portable</div>
             </div>
           </div>
           <div class="meal-card">
@@ -3175,11 +3261,9 @@
               <div class="meal-veg-mark"></div>
             </div>
             <div class="meal-info">
-              <div class="meal-cat">Immunity · Warm</div>
+              <div class="meal-cat">Warm</div>
               <div class="meal-name-card">Lentil Spinach Shorba</div>
-              <div class="meal-stats">
-                <strong>280 kcal</strong> · 16g protein · Gut-friendly
-              </div>
+              <div class="meal-stats">Comforting · Fresh · Gut-friendly</div>
             </div>
           </div>
           <div class="meal-card">
@@ -3195,9 +3279,7 @@
             <div class="meal-info">
               <div class="meal-cat">Breakfast · Energising</div>
               <div class="meal-name-card">Oat Porridge with Nuts & Seeds</div>
-              <div class="meal-stats">
-                <strong>340 kcal</strong> · 14g protein · Slow-release
-              </div>
+              <div class="meal-stats">Wholesome · Fresh · Slow-release</div>
             </div>
           </div>
         </div>
@@ -3224,42 +3306,50 @@
           <div class="why-features">
             <div class="why-feat">
               <div class="feat-num">01 — NUTRITION</div>
-              <div class="feat-title">Macro-balanced by design</div>
+              <div class="feat-title">Backed by nutrition</div>
               <div class="feat-desc">
-                Every dish is calibrated by nutritionists — precise protein,
-                carb, and fat targets built into each meal.
+                Every dish is planned by nutritionists so what's on your plate
+                actually supports your goals.
               </div>
             </div>
             <div class="why-feat">
-              <div class="feat-num">02 — REWARDS</div>
-              <div class="feat-title">Streak-based free meals</div>
+              <div class="feat-num">02 — FRESHNESS</div>
+              <div class="feat-title">Fresh meals, every time</div>
               <div class="feat-desc">
-                Stay consistent and the app rewards you. Build a 7-day streak
-                and unlock a free meal — automatically.
+                Every meal is cooked and delivered separately and freshly — no
+                batching, no reheating.
               </div>
             </div>
             <div class="why-feat">
-              <div class="feat-num">03 — FLEXIBILITY</div>
-              <div class="feat-title">Address changes, daily</div>
+              <div class="feat-num">03 — RELIABILITY</div>
+              <div class="feat-title">On-time delivery</div>
               <div class="feat-desc">
-                Office Monday, gym Tuesday, home Wednesday. Set a different
-                delivery address for each day of the week.
+                Your meal reaches you when it should, every single day —
+                reliably, without the wait.
               </div>
             </div>
             <div class="why-feat">
-              <div class="feat-num">04 — FRESHNESS</div>
-              <div class="feat-title">Cooked the same morning</div>
-              <div class="feat-desc">
-                No frozen meals, no reheating. Our chefs start cooking at 5am
-                for deliveries that arrive before noon.
-              </div>
-            </div>
-            <div class="why-feat">
-              <div class="feat-num">05 — PURITY</div>
+              <div class="feat-num">04 — PURITY</div>
               <div class="feat-title">100% vegetarian, always</div>
               <div class="feat-desc">
                 No cross-contamination, no hidden ingredients. A pure veg
                 kitchen from sourcing to your door.
+              </div>
+            </div>
+            <div class="why-feat">
+              <div class="feat-num">05 — TRANSPARENCY</div>
+              <div class="feat-title">Real-time updates in the app</div>
+              <div class="feat-desc">
+                Track your meals, deliveries, and plan status live — always
+                know exactly where things stand.
+              </div>
+            </div>
+            <div class="why-feat">
+              <div class="feat-num">06 — FLEXIBILITY</div>
+              <div class="feat-title">Skip a meal, anytime</div>
+              <div class="feat-desc">
+                Plans change. Skip any meal whenever you need to, right from
+                the app, no calls needed.
               </div>
             </div>
           </div>
@@ -3332,7 +3422,7 @@
           </div>
           <div>
             <div class="tag">Our story</div>
-            <h2>Mumbai's <em>macro-smart</em> pure veg kitchen.</h2>
+            <h2>Mumbai's <em>fitness-focused</em> pure veg kitchen.</h2>
             <p class="about-body" style="margin-top: 1.25rem">
               The Fitletic Kitchen started with a simple frustration — eating
               well in Mumbai either meant spending hours cooking, paying a
@@ -3572,9 +3662,9 @@
             <div class="faq-a-wrap">
               <div class="faq-a-inner">
                 <p class="faq-a">
-                  Yes. Every plan is calibrated by nutritionists with precise
-                  protein, carb, and fat targets for your specific goal — muscle
-                  gain, weight loss, or balanced eating.
+                  Yes. Every plan is put together by nutritionists for your
+                  specific goal — muscle gain, weight loss, or balanced
+                  eating.
                 </p>
               </div>
             </div>
@@ -3624,8 +3714,8 @@
               />
             </div>
             <div class="footer-tagline">
-              Chef-crafted, macro-balanced pure vegetarian meals. Delivered
-              fresh every morning across Mumbai.
+              Chef-crafted, wholesome pure vegetarian meals. Delivered fresh
+              every morning across Mumbai.
             </div>
           </div>
           <div class="footer-col">
