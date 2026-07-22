@@ -4013,21 +4013,22 @@
       function continueFromCalc() {
         const { goal, meals, days } = calcState;
         const p = priceFor(goal, meals, days);
-        const selectedMeals = Array.from(
+        const activeMealSlots = Array.from(
           document.querySelectorAll("#calcMeals .meal-btn.active"),
-        )
-          .map((b) => b.dataset.meal)
-          .join(" + ");
+        ).map((b) => b.dataset.meal);
+        const selectedMeals = activeMealSlots.join(" + ");
         document.getElementById("planModalEyebrow").textContent =
           GOAL_LABEL[goal] + " · " + selectedMeals + " · " + days + " days";
         document.getElementById("planModalTitle").textContent = "Custom Plan";
         document.getElementById("planModalPrice").textContent =
           inr(p.netPrice) + " (MRP " + inr(p.mrp) + ")";
         document.getElementById("planModalWebBtn").href =
-          "https://app.thefitletickitchen.com/?goal=" +
+          // TEMP: pointed at local dev server for testing — swap back to
+          // "https://app.thefitletickitchen.com/" before deploying.
+          "http://localhost:3000/?goal=" +
           goal +
-          "&meals=" +
-          meals +
+          "&slots=" +
+          activeMealSlots.join(",") +
           "&days=" +
           days;
         document.getElementById("planModalOverlay").classList.add("open");
