@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us | The Fitletic Kitchen</title>
+    <meta name="description" content="Get in touch with The Fitletic Kitchen — questions about meal plans, delivery, or your order. Call, WhatsApp, email, or send us a message." />
+    <link rel="canonical" href="https://www.thefitletickitchen.com/contact.html" />
+    <link rel="icon" type="image/png" href="/TFK_favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      :root {
+        --green: #014c38;
+        --green-dark: #012e22;
+        --gold: #fcb838;
+        --gold-dark: #e0a020;
+        --gray-light: #f7f6f2;
+        --text: #111;
+        --text-muted: #8a8a86;
+        --border: #e6e4dc;
+      }
+      body { font-family: "Inter", sans-serif; color: var(--text); background: #f7f6f2; line-height: 1.7; }
+      h1, h2, h3 { font-family: "Fraunces", serif; font-weight: 600; }
+      .wrap { max-width: 980px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+      .back { display: inline-block; margin-bottom: 1.5rem; color: var(--green); font-weight: 600; text-decoration: none; }
+      .card { background: #fff; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+      .header { background: var(--green); color: #fff; text-align: center; padding: 2.5rem 2rem; }
+      .header h1 { font-size: 1.75rem; margin-bottom: 0.5rem; word-break: break-word; }
+      .header p { font-size: 1rem; opacity: 0.85; font-weight: 400; }
+
+      .quick-grid { display: grid; grid-template-columns: 0.85fr 0.85fr 1.3fr; gap: 1rem; padding: 2rem; border-bottom: 1px solid var(--border); }
+      .quick-card {
+        display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem;
+        padding: 1.1rem 1.2rem; border: 1px solid var(--border); border-radius: 14px;
+        text-decoration: none; color: var(--text); transition: border-color 0.2s, transform 0.2s;
+      }
+      .quick-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+      .quick-card .qlabel { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+      .quick-card .qvalue { font-size: 0.95rem; font-weight: 600; color: var(--green); overflow-wrap: break-word; white-space: nowrap; overflow: hidden; text-overflow: clip; }
+      .quick-card .qvalue.qvalue-email { font-size: 0.9rem; letter-spacing: -0.01em; }
+
+      .body-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; padding: 2rem; }
+
+      form { display: flex; flex-direction: column; gap: 1rem; }
+      .field { display: flex; flex-direction: column; gap: 0.4rem; }
+      label { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+      input, textarea, select {
+        font-family: inherit; font-size: 0.95rem; padding: 0.75rem 0.9rem;
+        border: 1px solid var(--border); border-radius: 10px; background: var(--gray-light);
+        color: var(--text); outline: none; transition: border-color 0.2s, background 0.2s;
+      }
+      input:focus, textarea:focus, select:focus { border-color: var(--gold-dark); background: #fff; }
+      textarea { resize: vertical; min-height: 120px; }
+      .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+      .submit-btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+        margin-top: 0.5rem; padding: 14px 28px; border: none; border-radius: 8px;
+        font-size: 14px; font-weight: 600; letter-spacing: 0.02em; cursor: pointer;
+        background: linear-gradient(155deg, #ffd166 0%, var(--gold) 55%, var(--gold-dark) 100%);
+        color: var(--green-dark); box-shadow: 0 10px 26px rgba(252, 184, 56, 0.3);
+        transition: box-shadow 0.2s, transform 0.2s;
+      }
+      .submit-btn:hover { box-shadow: 0 14px 34px rgba(252, 184, 56, 0.4); transform: translateY(-2px); }
+      .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+      .form-note { font-size: 0.78rem; color: var(--text-muted); }
+
+      .side { display: flex; flex-direction: column; gap: 1.5rem; }
+      .side h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+      .side p { font-size: 0.9rem; color: var(--text-muted); }
+      .map-frame {
+        width: 100%; flex: 1; min-height: 380px; border: 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--border);
+      }
+      .map-frame iframe { width: 100%; height: 100%; border: 0; }
+
+      #formStatus { font-size: 0.9rem; font-weight: 600; margin-top: 0.25rem; display: none; }
+      #formStatus.ok { color: var(--green); display: block; }
+      #formStatus.err { color: #b3261e; display: block; }
+
+      .toast-overlay {
+        position: fixed; inset: 0; background: rgba(1, 46, 34, 0.45);
+        display: flex; align-items: center; justify-content: center;
+        padding: 1.5rem; z-index: 999; opacity: 0; pointer-events: none;
+        transition: opacity 0.25s ease;
+      }
+      .toast-overlay.show { opacity: 1; pointer-events: auto; }
+      .toast-card {
+        background: #fff; border-radius: 18px; padding: 2.25rem 2rem 1.75rem;
+        max-width: 360px; width: 100%; text-align: center; box-shadow: 0 24px 60px rgba(1, 46, 34, 0.25);
+        transform: translateY(12px) scale(0.97); transition: transform 0.25s ease;
+      }
+      .toast-overlay.show .toast-card { transform: translateY(0) scale(1); }
+      .toast-icon {
+        width: 56px; height: 56px; margin: 0 auto 1rem; border-radius: 50%;
+        background: var(--green); display: flex; align-items: center; justify-content: center;
+      }
+      .toast-icon svg { width: 26px; height: 26px; }
+      .toast-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text); }
+      .toast-card p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+      .toast-close {
+        display: inline-flex; align-items: center; justify-content: center;
+        padding: 10px 26px; border: none; border-radius: 8px; cursor: pointer;
+        font-size: 13.5px; font-weight: 600; letter-spacing: 0.02em;
+        background: linear-gradient(155deg, #ffd166 0%, var(--gold) 55%, var(--gold-dark) 100%);
+        color: var(--green-dark);
+      }
+
+      @media (max-width: 800px) {
+        .body-grid { grid-template-columns: 1fr; }
+        .quick-grid { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 600px) {
+        .wrap { padding: 1.75rem 0.75rem 3rem; }
+        .card { border-radius: 14px; }
+        .header { padding: 1.75rem 1.25rem; }
+        .header h1 { font-size: 1.3rem; }
+        .quick-grid, .body-grid { padding: 1.25rem; }
+        .row-2 { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <a class="back" href="/">← Back to home</a>
+      <div class="card">
+        <div class="header">
+          <h1>Get in touch</h1>
+          <p>Questions about meal plans, delivery, or an existing order? We usually reply within a few hours.</p>
+        </div>
+
+        <div class="quick-grid">
+          <a class="quick-card" href="tel:+919152277193">
+            <span class="qlabel">Call</span>
+            <span class="qvalue">+91 91522 77193</span>
+          </a>
+          <a class="quick-card" href="https://wa.me/919152277193" target="_blank" rel="noopener">
+            <span class="qlabel">WhatsApp</span>
+            <span class="qvalue">Chat with us</span>
+          </a>
+          <a class="quick-card" href="mailto:11goodfoodtfk@gmail.com">
+            <span class="qlabel">Email</span>
+            <span class="qvalue qvalue-email">11goodfoodtfk@gmail.com</span>
+          </a>
+        </div>
+
+        <div class="body-grid">
+          <div>
+            <form id="contactForm" action="https://formsubmit.co/11goodfoodtfk@gmail.com" method="POST">
+              <input type="hidden" name="_subject" value="New message from thefitletickitchen.com contact page" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
+              <div class="row-2">
+                <div class="field">
+                  <label for="name">Name</label>
+                  <input type="text" id="name" name="Name" required autocomplete="name" />
+                </div>
+                <div class="field">
+                  <label for="phone">Phone</label>
+                  <input type="tel" id="phone" name="Phone" required autocomplete="tel" />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="Email" required autocomplete="email" />
+              </div>
+
+              <div class="field">
+                <label for="topic">What's this about?</label>
+                <select id="topic" name="Topic">
+                  <option>General enquiry</option>
+                  <option>Meal plan &amp; pricing</option>
+                  <option>Delivery area / timing</option>
+                  <option>Existing order issue</option>
+                  <option>Partnership</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="message">Message</label>
+                <textarea id="message" name="Message" required placeholder="Tell us a bit about what you need..."></textarea>
+              </div>
+
+              <button type="submit" class="submit-btn" id="submitBtn">Send message</button>
+              <span id="formStatus"></span>
+              <p class="form-note">By submitting, you agree to our <a href="/privacy-policy.html" style="color: var(--green)">Privacy Policy</a>.</p>
+            </form>
+          </div>
+
+          <div class="side">
+            <div>
+              <h3>Visit us</h3>
+              <p>Shop No. 2, Opposite Mehboob Bakery, Next to Andaz Bakery, Somwari Bazar, Malad West, Mumbai – 400064</p>
+            </div>
+            <div class="map-frame">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d329.8819799271386!2d72.84110980273921!3d19.1824399514616!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b7e5c25174c3%3A0x3e1b63cb78bd868a!2sThe%20Fitletic%20Kitchen!5e0!3m2!1sen!2sus!4v1785581905742!5m2!1sen!2sus"
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast-overlay" id="toastOverlay">
+      <div class="toast-card">
+        <div class="toast-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6L9 17l-5-5" />
+          </svg>
+        </div>
+        <h3>Message sent!</h3>
+        <p>Thanks — we've got your message and will get back to you soon.</p>
+        <button type="button" class="toast-close" id="toastClose">Done</button>
+      </div>
+    </div>
+
+    <script>
+      var form = document.getElementById('contactForm');
+      var status = document.getElementById('formStatus');
+      var btn = document.getElementById('submitBtn');
+      var toastOverlay = document.getElementById('toastOverlay');
+      var toastClose = document.getElementById('toastClose');
+      var toastTimer = null;
+
+      function showToast() {
+        toastOverlay.classList.add('show');
+        toastTimer = setTimeout(hideToast, 5000);
+      }
+      function hideToast() {
+        toastOverlay.classList.remove('show');
+        clearTimeout(toastTimer);
+      }
+      toastClose.addEventListener('click', hideToast);
+      toastOverlay.addEventListener('click', function (e) {
+        if (e.target === toastOverlay) hideToast();
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+        status.className = '';
+        status.textContent = '';
+
+        fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        })
+          .then(function (res) {
+            if (res.ok) {
+              form.reset();
+              showToast();
+            } else {
+              throw new Error('Send failed');
+            }
+          })
+          .catch(function () {
+            status.textContent =
+              "Something went wrong. Please email us directly at 11goodfoodtfk@gmail.com.";
+            status.className = 'err';
+          })
+          .finally(function () {
+            btn.disabled = false;
+            btn.textContent = 'Send message';
+          });
+      });
+    </script>
+  </body>
+</html>
